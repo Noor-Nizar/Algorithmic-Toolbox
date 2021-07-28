@@ -16,7 +16,7 @@ int main(){
     arr.push_back(dist);
     int i = 1;int refs = 0;
     while(i < arr.size()){
-        while(arr[i] - arr[0] < fuel && i < arr.size()){
+        while(arr[i] - arr[0] <= fuel && i < arr.size()){
             i++;
         }
         if(i == 1){
