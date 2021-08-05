@@ -8,33 +8,21 @@
 
 using namespace std;
 
-void Disp(vector<int> v){
-  cout << "Vect : ";
-  for (int i = 0; i < v.size(); i++)
-  {
-    cout << v[i]<<" ";
-  }
-  cout << endl;
-}
-
 double minimal_distance(vector<int> x, vector<int> y) {
   if(x.size() == 2){
     return sqrt(pow(x[0]-x[1],2)+pow(y[0]-y[1],2));
   }else if(x.size() <= 1){
-    return 2*pow(10,3); //Max Dist
+    return pow(10,15); //Max Dist
   }
   int mid = x.size()/2;
-  vector<int> pt1x(x.begin(), x.begin()+mid+x.size()%2);
-  vector<int> pt1y(y.begin(), y.begin()+mid+y.size()%2);
-  // cout << " size " << pt1x.size() << endl;
-   Disp(pt1x);
-  vector<int> pt2x(x.begin()+mid, x.begin()+1);
-  vector<int> pt2y(y.begin()+mid, y.begin()+1);
-  // cout << " size2 " << pt2x.size() << endl;
-   Disp(pt2x);
+  vector<int> pt1x(x.begin(), x.begin()+mid+1);
+  vector<int> pt1y(y.begin(), y.begin()+mid+1);
+
+  vector<int> pt2x(x.begin()+mid, x.begin()+x.size());
+  vector<int> pt2y(y.begin()+mid, y.begin()+y.size());
   double min1 = minimal_distance(pt1x,pt1y);
   double min2 = minimal_distance(pt2x,pt2y);
-  // cout <<  "mid  ? " << x[mid] << endl;
+  
   double minComb = min(min1,min2);
   vector<int>slx(0);vector<int>sly(0);int counter = 0;
   for (int i = 0; i < x.size(); i++)
@@ -44,15 +32,10 @@ double minimal_distance(vector<int> x, vector<int> y) {
       slx.resize(slx.size()+1);sly.resize(sly.size()+1);
       slx[counter] = x[i];
       sly[counter] = y[i];
-      //cout << "Slxed " << slx[counter] << " : " << sly[counter] << endl;
       counter++;
     }
   }
-  // Disp(slx);
   double minRangerRover = minimal_distance(slx,sly);
-  //double MaclaReenBlindSpot = sqrt(pow(x[mid-1]-x[mid],2)+pow(y[mid-1]-y[mid],2));
-  //cout << x[mid]+minComb << "till " << x[mid] - minComb << endl;
-  //min(min(minComb,minRangerRover),MaclaReenBlindSpot)
   return min(minComb,minRangerRover);
 }
 
