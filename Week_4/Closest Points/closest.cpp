@@ -8,6 +8,18 @@
 
 using namespace std;
 
+double solveBrute(vector<int>&x, vector<int>&y){
+  double minv = 100000000000000;
+  for (int i = 0; i < x.size(); i++)
+  {
+    for (int j = i+1; j < y.size(); j++)
+    {
+      minv = min(sqrt(pow(x[i]-x[j],2)+pow(y[i]-y[j],2)),minv); 
+    }
+  }
+  return minv;
+}
+
 void Disp(vector<int> v){
   cout << "Vect : ";
   for (int i = 0; i < v.size(); i++)
@@ -18,29 +30,30 @@ void Disp(vector<int> v){
 }
 
 double minimal_distance(vector<int> x, vector<int> y) {
-  if(x.size() == 2){
-    return sqrt(pow(x[0]-x[1],2)+pow(y[0]-y[1],2));
-  }else if(x.size() <= 1){
-    return 2*pow(10,3); //Max Dist
-  }
+  if(x.size() <= 3)
+    return solveBrute(x,y);
+
   int mid = x.size()/2;
-  vector<int> pt1x(x.begin(), x.begin()+mid+x.size()%2);
-  vector<int> pt1y(y.begin(), y.begin()+mid+y.size()%2);
+  vector<int> pt1x(x.begin(), x.begin()+mid);
+  vector<int> pt1y(y.begin(), y.begin()+mid);
   // cout << " size " << pt1x.size() << endl;
+   cout << "pt1 : ";
    Disp(pt1x);
-  vector<int> pt2x(x.begin()+mid, x.begin()+1);
-  vector<int> pt2y(y.begin()+mid, y.begin()+1);
+  vector<int> pt2x(x.begin()+mid, x.begin()+x.size());
+  vector<int> pt2y(y.begin()+mid, y.begin()+y.size());
   // cout << " size2 " << pt2x.size() << endl;
+  cout << "pt2 : ";
    Disp(pt2x);
   double min1 = minimal_distance(pt1x,pt1y);
   double min2 = minimal_distance(pt2x,pt2y);
   // cout <<  "mid  ? " << x[mid] << endl;
   double minComb = min(min1,min2);
+  cout << "tol : " << minComb << endl;
   vector<int>slx(0);vector<int>sly(0);int counter = 0;
   for (int i = 0; i < x.size(); i++)
   {
-    if(x[i] == x[mid]) continue;
-    if(x[i] <= x[mid]+minComb && x[i] >= x[mid] - minComb){
+    //if(x[i] == x[mid]) continue;
+    if(abs(x[i]) < x[mid]+minComb){
       slx.resize(slx.size()+1);sly.resize(sly.size()+1);
       slx[counter] = x[i];
       sly[counter] = y[i];
@@ -48,7 +61,8 @@ double minimal_distance(vector<int> x, vector<int> y) {
       counter++;
     }
   }
-  // Disp(slx);
+  cout << "slx : ";
+   Disp(slx);
   double minRangerRover = minimal_distance(slx,sly);
   //double MaclaReenBlindSpot = sqrt(pow(x[mid-1]-x[mid],2)+pow(y[mid-1]-y[mid],2));
   //cout << x[mid]+minComb << "till " << x[mid] - minComb << endl;
