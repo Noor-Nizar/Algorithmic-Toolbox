@@ -39,16 +39,20 @@ vector<int> sol(int sNum, int ptNum){
     
 
     sort(db.begin(), db.end(), [](const vector<int>&v1, const vector<int>&v2){
+        if(v1[1] < 0 && v2[1] < 0) {
+            return v1[0] < v2[0] || v1[0] == v2[0] &&  v1[1] > v2[1];
+            }
         if(v1[1] == -1 || v2[1] == -1) {
-            return v1[0] < v2[0] || v1[0] == v2[0] &&  v1[1] < v2[1];}
+            return v1[0] < v2[0] || v1[0] == v2[0] &&  v1[1] < v2[1];
+            }
         else return v1[0] < v2[0] || v1[0] == v2[0] &&  v1[1] > v2[1];
     });
 
-    cout << endl;
+    //cout << endl;
     for (int i = 0; i < sNum+ptNum; i++)
     {
-        cout << db[i][0] << " : " << db[i][1] << " : " << db[i][2] << endl;
-    } cout << endl;
+        //cout << db[i][0] << " : " << db[i][1] << " : " << db[i][2] << endl;
+    } //cout << endl;
 
     int incrementor = 0;
     for (int i = 0; i < sNum+ptNum; i++)
@@ -70,8 +74,8 @@ vector<int> sol(int sNum, int ptNum){
 
     for (int i = 0; i < sNum+ptNum; i++)
     {
-        cout << db[i][0] << " : " << db[i][1] << " : " << db[i][2] << endl;
-    } cout << endl;
+        //cout << db[i][0] << " : " << db[i][1] << " : " << db[i][2] << endl;
+    } //cout << endl;
     vector<int> Res(ptNum);
     for (int i = sNum; i < ptNum+sNum; i++)
     {
